@@ -7,9 +7,9 @@ term = require('term')
 -- Lua modules
 QwiicButton = require('QwiicButton')
 QwiicJoystick = require('QwiicJoystick')
-ssd1306 = require('ssd1306')
-framebuffer = require('framebuffer')
-font = require('pixeloperator')
+ssd1306 = require('qwiic.ssd1327_oled.ssd1306')
+framebuffer = require('qwiic.ssd1327_oled.framebuffer')
+font = require('qwiic.ssd1327_oled.pixeloperator')
 rtc = require('rv8803')
 wm8960 = require('wm8960')
 

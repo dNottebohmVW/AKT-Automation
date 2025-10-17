@@ -7,7 +7,7 @@ ssd1306.CONTRAST = 0x81
 ssd1306.ENTIRE_ON = 0xa4
 ssd1306.NORM_INV = 0xa6
 ssd1306.DISP = 0xae
-ssd1306.MEM_ADDR = 0x20
+ssd1306.MEM_MODE = 0x20
 ssd1306.COL_ADDR = 0x21
 ssd1306.PAGE_ADDR = 0x22
 ssd1306.DISP_START_LINE = 0x40
@@ -20,6 +20,10 @@ ssd1306.DISP_CLK_DIV = 0xd5
 ssd1306.PRECHARGE = 0xd9
 ssd1306.VCOM_DESEL = 0xdb
 ssd1306.CHARGE_PUMP = 0x8d
+ssd1306.SEG_REMAP = 0xA0
+ssd1306.SCAN_DEC = 0xC8
+
+
 
 function ssd1306:rshift(x, y)
     return(x >> y)
@@ -47,11 +51,11 @@ function ssd1306.new(i2c, width, height, i2c_addr)
     if self.i2c_addr ~= nil then
         self.i2c_addr = i2c_addr
     end
-    local tab = {self.DISP, self.MEM_ADDR, 0x01, self.DISP_START_LINE, self.SEG_REMAP + 0x01,
+    local tab = {self.DISP, self.MEM_MODE, 0x02, self.DISP_START_LINE, self.SEG_REMAP + 0x01,
         self.MUX_RATIO, height - 1, self.COM_OUT_DIR + 0x08, self.DISP_OFFSET, 0x00,
         self.COM_PIN_CFG, height == 32 and 0x02 or 0x12, self.DISP_CLK_DIV, 0x80,
-        self.PRECHARGE, 0x88, self.VCOM_DESEL, 0x30, self.CONTRAST, 0x80, self.ENTIRE_ON,
-        self.NORM_INV, self.CHARGE_PUMP, 0x14, self.DISP + 0x01, self.COL_ADDR, 0, 127,
+        self.PRECHARGE, 0x22, self.VCOM_DESEL, 0x30, self.CONTRAST, 0x8F, self.ENTIRE_ON,
+        self.NORM_INV, self.CHARGE_PUMP, 0x14, self.SEG_REMAP | 0x01, self.SCAN_DEC, self.DISP + 0x01, self.COL_ADDR, 0, 127,
         self.PAGE_ADDR, 0, height/8-1}
     for i, v in ipairs(tab) do
         self:wc(v)

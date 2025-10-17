@@ -5,9 +5,9 @@ os = require('freertos')
 term = require('term')
 
 -- Lua display modules
-ssd1306 = require('ssd1306')
-framebuffer = require('framebuffer')
-font = require('pixeloperator')
+ssd1306 = require('qwiic.ssd1327_oled.ssd1306')
+framebuffer = require('qwiic.ssd1327_oled.framebuffer')
+font = require('qwiic.ssd1327_oled.pixeloperator')
 
 oled = ssd1306.new(qwiic.i2c, 128, 64)
 fb = framebuffer.new(128, 64)
